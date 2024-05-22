@@ -44,6 +44,10 @@ class Ui_Form(object):
         self.prev_btn.setGeometry(QtCore.QRect(100, 900, 200, 40))
         self.prev_btn.setObjectName("prev_btn")
 
+        self.recover_btn = QtWidgets.QPushButton(self.widget)
+        self.recover_btn.setGeometry(QtCore.QRect(100, 400, 200, 40))
+        self.recover_btn.setObjectName("recover_btn")
+
         self.slider = QSlider(self.widget)
         self.slider.setGeometry(QtCore.QRect(100, 1000, 200, 40))
         self.slider.setObjectName("slider")
@@ -66,6 +70,7 @@ class Ui_Form(object):
         self.next_btn.clicked.connect(self.next_img)
         self.prev_btn.clicked.connect(self.prev_img)
         self.slider.valueChanged.connect(self.handle_slider_change)
+        self.recover_btn.clicked.connect(self.recover)
 
 
     def retranslateUi(self, Form):
@@ -76,6 +81,7 @@ class Ui_Form(object):
         self.save_mask_btn.setText(_translate("Form", "Save Mask"))
         self.next_btn.setText(_translate("Form", "Next Image"))
         self.prev_btn.setText(_translate("Form", "Prev Image"))
+        self.recover_btn.setText(_translate("Form", "Recover"))
 
     def load_image(self):
         self.folder_path = QFileDialog.getExistingDirectory(QtWidgets.QWidget(),
@@ -94,6 +100,8 @@ class Ui_Form(object):
         self.slider_label.setText(f"Slider Value: {self.slider.value()}")
     def save_mask(self):
         self.graphicsView.save_mask()
+    def recover(self):
+        self.graphicsView.recover()
     
 
 

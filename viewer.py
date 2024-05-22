@@ -18,11 +18,12 @@ class ImageViewer(QGraphicsView):
         self.mouse_x = 0
         self.mouse_y = 0
         self.cached_masks = {}
+        self.recoverMask = None
 
     def loadInitImg(self, root_folder_path):
         self.root_folder_path = root_folder_path
-        img_path = os.path.join(root_folder_path, 'patch')
-        mask_path = os.path.join(root_folder_path, 'mask')
+        img_path = os.path.join(root_folder_path, 'train_data')
+        mask_path = os.path.join(root_folder_path, 'train_mask')
         self.imgs = [os.path.join(img_path, img) for img in os.listdir(img_path)]
         self.masks = [os.path.join(mask_path, img) for img in os.listdir(mask_path)]
         self.totalImgs = len(self.imgs)
@@ -30,6 +31,7 @@ class ImageViewer(QGraphicsView):
         self.load_img()
 
     def load_img(self):
+        print(self.imgs[self.idx].split('//')[-1])
         self.pixmap = QPixmap(self.imgs[self.idx])
         self.pixmapItem = QGraphicsPixmapItem(self.pixmap)
         
@@ -93,6 +95,14 @@ class ImageViewer(QGraphicsView):
     def mousePressEvent(self, e):
         super().mousePressEvent(e)
         self.isPress = True
+        self.recoverMask = self.mask.copy()
+    
+    def recover(self):
+        self.mask = self.recoverMask.copy()
+        mask_qimage = self.deal_mask(self.mask)
+        self.mask_pixmap = QPixmap.fromImage(mask_qimage)
+        self.mask_pixmapItem.setPixmap(self.mask_pixmap)
+        self.mask_pixmapItem.setOpacity(self.opacity)
 
     def mouseReleaseEvent(self, e):
         super().mouseReleaseEvent(e)
