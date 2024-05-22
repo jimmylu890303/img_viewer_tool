@@ -88,6 +88,18 @@ class ImageViewer(QGraphicsView):
         self.mask_pixmapItem.setPixmap(self.mask_pixmap)
         self.mask_pixmapItem.setOpacity(self.opacity)
 
+    def filter(self):
+        lower_blue = np.array([70,0,0])
+        upper_blue = np.array([130,255,255])
+        img = cv2.imread(self.imgs[self.idx])
+        img_hsv = cv2.cvtColor(img,cv2.COLOR_BGR2HSV)
+        mask = cv2.inRange(img_hsv,lower_blue,upper_blue)
+        self.mask = cv2.cvtColor(mask,cv2.COLOR_GRAY2BGR)
+        mask_qimage = self.deal_mask(self.mask)
+        self.mask_pixmap = QPixmap.fromImage(mask_qimage)
+        self.mask_pixmapItem.setPixmap(self.mask_pixmap)
+        self.mask_pixmapItem.setOpacity(self.opacity)
+
     def enable_mask(self):
         self.enableMask = not self.enableMask
         self.mask_pixmapItem.setVisible(self.enableMask)

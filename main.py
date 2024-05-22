@@ -48,6 +48,10 @@ class Ui_Form(object):
         self.recover_btn.setGeometry(QtCore.QRect(100, 400, 200, 40))
         self.recover_btn.setObjectName("recover_btn")
 
+        self.filter_btn = QtWidgets.QPushButton(self.widget)
+        self.filter_btn.setGeometry(QtCore.QRect(100, 300, 200, 40))
+        self.filter_btn.setObjectName("filter_btn")
+
         self.slider = QSlider(self.widget)
         self.slider.setGeometry(QtCore.QRect(100, 1000, 200, 40))
         self.slider.setObjectName("slider")
@@ -71,6 +75,7 @@ class Ui_Form(object):
         self.prev_btn.clicked.connect(self.prev_img)
         self.slider.valueChanged.connect(self.handle_slider_change)
         self.recover_btn.clicked.connect(self.recover)
+        self.filter_btn.clicked.connect(self.filter)
 
 
     def retranslateUi(self, Form):
@@ -82,6 +87,7 @@ class Ui_Form(object):
         self.next_btn.setText(_translate("Form", "Next Image"))
         self.prev_btn.setText(_translate("Form", "Prev Image"))
         self.recover_btn.setText(_translate("Form", "Recover"))
+        self.filter_btn.setText(_translate("Form", "Filter"))
 
     def load_image(self):
         folder_path = QFileDialog.getExistingDirectory(QtWidgets.QWidget(),
@@ -103,6 +109,8 @@ class Ui_Form(object):
         self.graphicsView.save_mask()
     def recover(self):
         self.graphicsView.recover()
+    def filter(self):
+        self.graphicsView.filter()
     
 
 
