@@ -84,10 +84,11 @@ class Ui_Form(object):
         self.recover_btn.setText(_translate("Form", "Recover"))
 
     def load_image(self):
-        self.folder_path = QFileDialog.getExistingDirectory(QtWidgets.QWidget(),
+        folder_path = QFileDialog.getExistingDirectory(QtWidgets.QWidget(),
                   "Open folder",
                   "./")  
-        if self.folder_path is not None:
+        if folder_path != "":
+            self.folder_path = folder_path
             self.graphicsView.loadInitImg(self.folder_path)
     def enbale_mask(self):
         self.graphicsView.enable_mask()
